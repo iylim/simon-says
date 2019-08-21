@@ -1,8 +1,6 @@
 import {
-  enableGameSquares,
-  disableGameSquares,
-  enableStartButton,
-  disableStartButton,
+  toggleGameSquares,
+  togglePlayButton,
   activateGameSquare,
   setHighScore,
 } from './utils.js';
@@ -10,11 +8,13 @@ import {
 const BASE_LENGTH = 2;
 
 class GameMaster {
+  // TODO: documentation
   constructor(seq_length) {
     this.setBoardElements();
     this.resetGame(seq_length);
   }
 
+  // TODO: documentation
   resetGame = seq_length => {
     this.curr_score = 0;
     this.seq_length = seq_length || BASE_LENGTH;
@@ -23,6 +23,7 @@ class GameMaster {
     this.sequence = this.generateSequence(this.seq_length);
   };
 
+  // TODO: documentation
   setBoardElements = () => {
     const squares = document.querySelectorAll('.square');
     this.board = {};
@@ -31,21 +32,23 @@ class GameMaster {
     });
   };
 
+  // TODO: documentation
   runAITurn = () => {
     this.user_turn = false;
-    disableGameSquares();
+    toggleGameSquares(this.userInput, false);
     const delay_time = 500;
-    this.sequence.forEach((square, index) => {
+    this.sequence.forEach((square_id, index) => {
       setTimeout(() => {
-        activateGameSquare(square);
+        activateGameSquare(this.board[square_id]);
       }, delay_time * index);
     });
     setTimeout(() => {
-      enableGameSquares(this.userInput);
+      toggleGameSquares(this.userInput, true);
       this.user_turn = true;
     }, delay_time * this.sequence.length);
   };
 
+  // TODO: documentation
   generateSequence = (seq_length, prev_seq) => {
     const new_seq = prev_seq || [];
     const options = Object.keys(this.board);
@@ -55,10 +58,12 @@ class GameMaster {
     return new_seq;
   };
 
+  // TODO: documentation
   incrementSeqLength = (incr = 1) => {
     this.seq_length += incr;
   };
 
+  // TODO: documentation
   userInput = event => {
     if (!this.user_turn) return;
     // NOTE: idk if event.target works for a keyboard event? we'll see
@@ -69,6 +74,7 @@ class GameMaster {
     this.checkSequence();
   };
 
+  // TODO: documentation
   checkSequence = () => {
     /* 
       NOTE: this is kinda inefficient because it checks the whole sequence every time
@@ -91,6 +97,7 @@ class GameMaster {
     }
   };
 
+  // TODO: documentation
   isWin = () => {
     alert('Correct Sequence!');
     this.curr_score += 1;
@@ -98,15 +105,17 @@ class GameMaster {
     this.nextRound();
   };
 
+  // TODO: documentation
   gameOver = () => {
     document.getElementById('play-button').innerText = 'Play Again';
-    disableGameSquares();
+    toggleGameSquares(this.userInput, false);
     setHighScore(this.curr_score);
     alert('Game Over!');
     // TODO: maybe display correct sequence?
-    enableStartButton();
+    togglePlayButton(true);
   };
 
+  // TODO: documentation
   nextRound = () => {
     alert('Get ready!');
     setTimeout(() => {
@@ -114,9 +123,10 @@ class GameMaster {
     }, 1000);
   };
 
+  // TODO: documentation
   startGame = () => {
     this.resetGame();
-    disableStartButton();
+    togglePlayButton(false);
     this.nextRound();
   };
 }
