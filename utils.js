@@ -5,15 +5,19 @@
  */
 export const toggleGameSquares = (funcOnInput, enable = false) => {
   const squares = document.querySelectorAll('.square');
+  console.log(`${enable ? 'adding' : 'removing'} listeners:`, squares);
   squares.forEach(square => {
-    const toggleEL = enable ? square.addEventListener : square.removeEventListener;
-    toggleEL('click', funcOnInput);
-    toggleEL('keydown', event => {
-      if (event.code === `Key${square.id.toUpperCase()}`) {
-        funcOnInput();
-      }
-    });
+    if (enable) {
+      square.addEventListener('click', funcOnInput);
+    } else {
+      square.removeEventListener('click', funcOnInput);
+    }
   });
+  if (enable) {
+    document.body.addEventListener('keydown', funcOnInput);
+  } else {
+    document.body.removeEventListener('keydown', funcOnInput);
+  }
 };
 
 /**
@@ -32,7 +36,7 @@ export const togglePlayButton = (enabled = false) => {
 export const activateGameSquare = (square, display_time = 500) => {
   // TODO: all of this
   // TODO: figure out a way to get the correct sound in
-  console.log(square, display_time);
+  console.log('Activating square:', square);
 };
 
 /**
@@ -42,5 +46,27 @@ export const activateGameSquare = (square, display_time = 500) => {
  */
 export const setHighScore = new_score => {
   // TODO:
-  console.log(new_score);
+  // console.log(new_score);
+};
+
+/**
+ * A pure function that generates a randomized array sequence of the given length
+ * from the given options.
+ *
+ * If the optional `prev_seq` parameter is included, just adds random new element(s) to
+ * the end of the sequence until it's the given length, otherwise creates an entirely
+ * new randomized sequence of the given length
+ *
+ * @param {Array<T>} options the elements to choose from for the sequence
+ * @param {number} seq_length the length of the sequence to generate
+ * @param {Array<T>} [prev_seq] [optional] the previous sequence to be used as the start of the new sequence
+ * @returns {Array<T>} generated sequence array
+ */
+export const generateSequence = (options, seq_length, prev_seq) => {
+  // TODO: what if the prev_seq is longer than desired sequence length
+  const new_seq = prev_seq ? [...prev_seq] : [];
+  while (new_seq.length < seq_length) {
+    new_seq.push(options[Math.floor(Math.random() * options.length)]);
+  }
+  return new_seq;
 };
