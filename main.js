@@ -1,9 +1,12 @@
 import GameMaster from './GameMaster.js';
+import { setHighScore } from './utils.js';
 
 const GM = new GameMaster();
 
 const play_button = document.getElementById('play-button');
 play_button.addEventListener('click', GM.startGame);
+
+setHighScore();
 
 /* 
 -Press button to start game

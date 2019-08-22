@@ -40,12 +40,22 @@ export const activateGameSquare = (square, display_time = 500) => {
 
 /**
  * Takes in a score, checks the current saved high score in localstorage, and
- * if the new score is higher sets the stored high score to be the new score
- * @param {number} new_score the potential new high score
+ * if the new score is higher sets the stored high score to be the new score.
+ * After setting, displays the high score on the page.
+ *
+ * If no new score is provided, will just display the currently saved high score on the page.
+ * @param {number} [new_score] the potential new high score
  */
 export const setHighScore = new_score => {
-  // TODO:
-  // console.log(new_score);
+  const high_score = parseInt(localStorage.getItem('high_score'), 10);
+  if (!new_score) {
+    document.getElementById('high-score-num').innerText = high_score || 0;
+  }
+  if (!high_score || new_score > high_score) {
+    localStorage.setItem('high_score', new_score);
+    document.getElementById('high-score-num').innerText = new_score;
+    alert(`New high score: ${new_score}\nOld high score: ${high_score}`);
+  }
 };
 
 /**
