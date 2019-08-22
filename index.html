@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./styles.css" />
     <title>Simon Says</title>
     <script defer src="./main.js" type="module"></script>
+    <!-- TODO: set favicon -->
   </head>
   <body>
     <h1>Simon Says</h1>
@@ -18,12 +19,14 @@
       <div class="square" id="c">(C)ode</div>
       <div class="square" id="k">(K)evin</div>
     </div>
-    <div class="score">
-      <div class="current-score-word">
-        Current Score: 0
+    <div class="scores">
+      <div class="curr-score">
+        Current Score:
+        <span id="curr-score-num">0</span>
       </div>
-      <div class="high-score-word">
-        High Score: 0
+      <div class="high-score">
+        High Score:
+        <span id="high-score-num">0</span>
       </div>
     </div>
     <footer>Made by Sam, Brock, and Ivy</footer>

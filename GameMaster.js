@@ -3,8 +3,14 @@ import {
   togglePlayButton,
   activateGameSquare,
   setHighScore,
+<<<<<<< HEAD
   generateSequence
 } from "./utils.js";
+=======
+  setDisplayScore,
+  generateSequence,
+} from './utils.js';
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
 
 const BASE_LENGTH = 2;
 
@@ -57,6 +63,10 @@ class GameMaster {
    */
   resetGame = () => {
     this.curr_score = 0;
+<<<<<<< HEAD
+=======
+    setDisplayScore(0);
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     this.seq_length = this.start_length;
     this.user_turn = false;
     this.user_sequence = [];
@@ -73,7 +83,11 @@ class GameMaster {
    *  }
    */
   setBoardElements = () => {
+<<<<<<< HEAD
     const squares = document.querySelectorAll(".square");
+=======
+    const squares = document.querySelectorAll('.square');
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     this.board = {};
     squares.forEach(square => {
       this.board[square.id] = square;
@@ -114,6 +128,7 @@ class GameMaster {
    */
   userInput = event => {
     if (!this.user_turn) return;
+<<<<<<< HEAD
     console.log("Event triggered:", event);
     if (event.type === "keydown") {
       if (!Object.keys(this.board).includes(event.key)) return;
@@ -121,6 +136,12 @@ class GameMaster {
     const square =
       event.type === "keydown" ? this.board[event.key] : event.target;
     console.log("User input:", square);
+=======
+    if (event.type === 'keydown') {
+      if (!Object.keys(this.board).includes(event.key)) return;
+    }
+    const square = event.type === 'keydown' ? this.board[event.key] : event.target;
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     activateGameSquare(square); // NOTE: potentially need to disable input while activating current?
     this.user_sequence.push(square.id);
     this.checkSequence();
@@ -135,10 +156,17 @@ class GameMaster {
    */
   checkSequence = () => {
     /* 
+<<<<<<< HEAD
         NOTE: this is kinda inefficient because it checks the whole sequence every time
         Could probably be improved by JUST checking the last/most recent element and assuming this runs every step
         Current way is a little 'safer' though in case it doesn't get run
       */
+=======
+      NOTE: this is kinda inefficient because it checks the whole sequence every time
+      Could probably be improved by JUST checking the last/most recent element and assuming this runs every step
+      Current way is a little 'safer' though in case it doesn't get run
+    */
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     // look backwards through the user sequence
     for (let index = this.user_sequence.length - 1; index >= 0; index--) {
       // check if the element is correct
@@ -160,8 +188,14 @@ class GameMaster {
    * length, and triggers the next round
    */
   isWin = () => {
+<<<<<<< HEAD
     alert("Correct Sequence!");
     this.curr_score += 1;
+=======
+    alert('Correct Sequence!');
+    this.curr_score += 1;
+    setDisplayScore(this.curr_score);
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     this.incrementSeqLength();
     this.nextRound();
   };
@@ -171,10 +205,17 @@ class GameMaster {
    * the high score, and changes the play button to say 'Play Again' and reactivates it
    */
   gameOver = () => {
+<<<<<<< HEAD
     document.getElementById("play-button").innerText = "Play Again";
     toggleGameSquares(this.userInput, false);
     setHighScore(this.curr_score);
     alert("Game Over!");
+=======
+    document.getElementById('play-button').innerText = 'Play Again';
+    toggleGameSquares(this.userInput, false);
+    setHighScore(this.curr_score);
+    alert('Game Over!');
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     // TODO: maybe display correct sequence?
     togglePlayButton(true);
   };
@@ -184,9 +225,15 @@ class GameMaster {
    * runs the AI turn
    */
   nextRound = () => {
+<<<<<<< HEAD
     alert("Get ready!");
     this.user_sequence = [];
     this.generateSequence();
+=======
+    this.user_sequence = [];
+    this.generateSequence();
+    alert('Get ready!');
+>>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
     setTimeout(() => {
       this.runAITurn();
     }, 1000);
