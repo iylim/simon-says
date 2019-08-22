@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import {
   toggleGameSquares,
   togglePlayButton,
@@ -133,8 +134,7 @@ class GameMaster {
    * - Triggers a win if the input is entirely correct and covers the whole sequence
    */
   checkSequence = () => {
-    /* 
-      NOTE: this is kinda inefficient because it checks the whole sequence every time
+    /* NOTE: this is kinda inefficient because it checks the whole sequence every time
       Could probably be improved by JUST checking the last/most recent element and assuming this runs every step
       Current way is a little 'safer' though in case it doesn't get run
     */

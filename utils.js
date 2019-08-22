@@ -54,6 +54,7 @@ export const setHighScore = new_score => {
   if (!high_score || new_score > high_score) {
     localStorage.setItem('high_score', new_score);
     document.getElementById('high-score-num').innerText = new_score;
+    // eslint-disable-next-line no-alert
     alert(`New high score: ${new_score}\nOld high score: ${high_score}`);
   }
 };
