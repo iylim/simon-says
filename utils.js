@@ -4,21 +4,6 @@
  * @param {boolean} [enable] whether the input should turn interactivity on or off, defaults to off
  */
 export const toggleGameSquares = (funcOnInput, enable = false) => {
-<<<<<<< HEAD
-  const squares = document.querySelectorAll(".square");
-  console.log(`${enable ? "adding" : "removing"} listeners:`, squares);
-  squares.forEach(square => {
-    if (enable) {
-      square.addEventListener("click", funcOnInput);
-    } else {
-      square.removeEventListener("click", funcOnInput);
-    }
-  });
-  if (enable) {
-    document.body.addEventListener("keydown", funcOnInput);
-  } else {
-    document.body.removeEventListener("keydown", funcOnInput);
-=======
   const squares = document.querySelectorAll('.square');
   squares.forEach(square => {
     if (enable) {
@@ -31,7 +16,6 @@ export const toggleGameSquares = (funcOnInput, enable = false) => {
     document.body.addEventListener('keydown', funcOnInput);
   } else {
     document.body.removeEventListener('keydown', funcOnInput);
->>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
   }
 };
 
@@ -40,11 +24,7 @@ export const toggleGameSquares = (funcOnInput, enable = false) => {
  * @param {boolean} [enabled] whether the button should be enabled or disabled, defaults to false
  */
 export const togglePlayButton = (enabled = false) => {
-<<<<<<< HEAD
-  document.getElementById("play-button").disabled = !enabled;
-=======
   document.getElementById('play-button').disabled = !enabled;
->>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
 };
 
 /**
@@ -55,23 +35,11 @@ export const togglePlayButton = (enabled = false) => {
 export const activateGameSquare = (square, display_time = 500) => {
   // TODO: all of this
   // TODO: figure out a way to get the correct sound in
-<<<<<<< HEAD
-  console.log("Activating square:", square);
-=======
   console.log('Activating square:', square.id);
->>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
 };
 
 /**
  * Takes in a score, checks the current saved high score in localstorage, and
-<<<<<<< HEAD
- * if the new score is higher sets the stored high score to be the new score
- * @param {number} new_score the potential new high score
- */
-export const setHighScore = new_score => {
-  // TODO:
-  // console.log(new_score);
-=======
  * if the new score is higher sets the stored high score to be the new score.
  * After setting, displays the high score on the page.
  *
@@ -86,6 +54,7 @@ export const setHighScore = new_score => {
   if (!high_score || new_score > high_score) {
     localStorage.setItem('high_score', new_score);
     document.getElementById('high-score-num').innerText = new_score;
+    // eslint-disable-next-line no-alert
     alert(`New high score: ${new_score}\nOld high score: ${high_score}`);
   }
 };
@@ -96,7 +65,6 @@ export const setHighScore = new_score => {
  */
 export const setDisplayScore = new_score => {
   document.getElementById('curr-score-num').innerText = new_score;
->>>>>>> 31cb6e0ee74ebf2240ee1b7fbb63e7d42a0bb663
 };
 
 /**
