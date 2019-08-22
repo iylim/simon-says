@@ -1,3 +1,22 @@
 * {
-  font-family: "Arial";
+  font-family: 'Arial';
+}
+
+#board {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+  width: 80%;
+}
+
+.square {
+  padding: 2rem;
+  border: 1px solid blue;
+  background-color: rgba(173, 216, 230, 0.5);
+  cursor: pointer;
+}
+
+.square:active {
+  background-color: rgb(0, 0, 139, 0.5);
 }
