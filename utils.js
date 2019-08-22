@@ -5,7 +5,6 @@
  */
 export const toggleGameSquares = (funcOnInput, enable = false) => {
   const squares = document.querySelectorAll('.square');
-  console.log(`${enable ? 'adding' : 'removing'} listeners:`, squares);
   squares.forEach(square => {
     if (enable) {
       square.addEventListener('click', funcOnInput);
@@ -36,7 +35,7 @@ export const togglePlayButton = (enabled = false) => {
 export const activateGameSquare = (square, display_time = 500) => {
   // TODO: all of this
   // TODO: figure out a way to get the correct sound in
-  console.log('Activating square:', square);
+  console.log('Activating square:', square.id);
 };
 
 /**
@@ -47,6 +46,14 @@ export const activateGameSquare = (square, display_time = 500) => {
 export const setHighScore = new_score => {
   // TODO:
   // console.log(new_score);
+};
+
+/**
+ * Updates the displayed score
+ * @param {number} new_score the new score to be displays
+ */
+export const setDisplayScore = new_score => {
+  document.getElementById('curr-score-num').innerText = new_score;
 };
 
 /**

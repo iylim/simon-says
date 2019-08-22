@@ -3,6 +3,7 @@ import {
   togglePlayButton,
   activateGameSquare,
   setHighScore,
+  setDisplayScore,
   generateSequence,
 } from './utils.js';
 
@@ -57,6 +58,7 @@ class GameMaster {
    */
   resetGame = () => {
     this.curr_score = 0;
+    setDisplayScore(0);
     this.seq_length = this.start_length;
     this.user_turn = false;
     this.user_sequence = [];
@@ -114,12 +116,10 @@ class GameMaster {
    */
   userInput = event => {
     if (!this.user_turn) return;
-    console.log('Event triggered:', event);
     if (event.type === 'keydown') {
       if (!Object.keys(this.board).includes(event.key)) return;
     }
     const square = event.type === 'keydown' ? this.board[event.key] : event.target;
-    console.log('User input:', square);
     activateGameSquare(square); // NOTE: potentially need to disable input while activating current?
     this.user_sequence.push(square.id);
     this.checkSequence();
@@ -161,6 +161,7 @@ class GameMaster {
   isWin = () => {
     alert('Correct Sequence!');
     this.curr_score += 1;
+    setDisplayScore(this.curr_score);
     this.incrementSeqLength();
     this.nextRound();
   };
@@ -183,9 +184,9 @@ class GameMaster {
    * runs the AI turn
    */
   nextRound = () => {
-    alert('Get ready!');
     this.user_sequence = [];
     this.generateSequence();
+    alert('Get ready!');
     setTimeout(() => {
       this.runAITurn();
     }, 1000);
