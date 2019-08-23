@@ -90,16 +90,17 @@ class GameMaster {
   runAITurn = () => {
     this.user_turn = false;
     toggleGameSquares(this.userInput, false);
-    const delay_time = 500;
+    this.delay_time = 850;
+    this.space_time = 200;
     this.sequence.forEach((square_id, index) => {
       setTimeout(() => {
-        activateGameSquare(this.board[square_id]);
-      }, delay_time * index);
+        activateGameSquare(this.board[square_id], this.delay_time);
+      }, (this.delay_time + this.space_time) * index);
     });
     setTimeout(() => {
       toggleGameSquares(this.userInput, true);
       this.user_turn = true;
-    }, delay_time * this.sequence.length);
+    }, this.delay_time * this.sequence.length);
   };
 
   /**
@@ -123,7 +124,9 @@ class GameMaster {
     const square = event.type === 'keydown' ? this.board[event.key] : event.target;
     activateGameSquare(square); // NOTE: potentially need to disable input while activating current?
     this.user_sequence.push(square.id);
-    this.checkSequence();
+    setTimeout(() => {
+      this.checkSequence();
+    }, this.delay_time);
   };
 
   /**

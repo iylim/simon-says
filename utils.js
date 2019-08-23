@@ -7,8 +7,10 @@ export const toggleGameSquares = (funcOnInput, enable = false) => {
   const squares = document.querySelectorAll('.square');
   squares.forEach(square => {
     if (enable) {
+      square.style.cursor = 'pointer';
       square.addEventListener('click', funcOnInput);
     } else {
+      square.style.cursor = '';
       square.removeEventListener('click', funcOnInput);
     }
   });
@@ -33,9 +35,20 @@ export const togglePlayButton = (enabled = false) => {
  * @param {number} display_time the amount of time in ms for the effects to remain, defaults to 500
  */
 export const activateGameSquare = (square, display_time = 500) => {
-  // TODO: all of this
   // TODO: figure out a way to get the correct sound in
-  console.log('Activating square:', square.id);
+  const properties = {
+    '--opacity': 1,
+    border: '3px solid darkslategrey',
+  };
+  Object.keys(properties).forEach(prop => {
+    square.style.setProperty(prop, properties[prop]);
+  });
+  setTimeout(() => {
+    Object.keys(properties).forEach(prop => {
+      square.style.setProperty(prop, '');
+    });
+  }, display_time);
+  // console.log('Activating square:', square.id);
 };
 
 /**
