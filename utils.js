@@ -60,11 +60,15 @@ export const activateGameSquare = (square, display_time = 500) => {
  * @param {number} [new_score] the potential new high score
  */
 export const setHighScore = new_score => {
-  const high_score = parseInt(localStorage.getItem('high_score'), 10);
+  let high_score = parseInt(localStorage.getItem('high_score'), 10);
+  if (!high_score) {
+    high_score = 0;
+    localStorage.setItem('high_score', high_score);
+  }
   if (!new_score) {
     document.getElementById('high-score-num').innerText = high_score || 0;
   }
-  if (!high_score || new_score > high_score) {
+  if (new_score > high_score) {
     localStorage.setItem('high_score', new_score);
     document.getElementById('high-score-num').innerText = new_score;
     // eslint-disable-next-line no-alert
