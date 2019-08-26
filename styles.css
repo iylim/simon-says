@@ -7,10 +7,16 @@ body {
   background-color: #f0f0f0;
 }
 
+h1 {
+  text-decoration: underline;
+}
+
 #play-button {
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.1rem;
+  background-color: violet;
+  border-radius: 2px;
   border: none;
   cursor: pointer;
 }
@@ -19,7 +25,7 @@ body {
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
-  width: fit-content;
+  width: max-content;
   text-align: justify;
   margin: auto;
   margin-bottom: 1rem;
