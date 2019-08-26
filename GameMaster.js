@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import {
   toggleGameSquares,
   togglePlayButton,
@@ -90,7 +89,7 @@ class GameMaster {
   runAITurn = () => {
     this.user_turn = false;
     toggleGameSquares(this.userInput, false);
-    this.delay_time = 850;
+    this.delay_time = 650;
     this.space_time = 200;
     this.sequence.forEach((square_id, index) => {
       setTimeout(() => {
@@ -122,9 +121,11 @@ class GameMaster {
       if (!Object.keys(this.board).includes(event.key)) return;
     }
     const square = event.type === 'keydown' ? this.board[event.key] : event.target;
-    activateGameSquare(square); // NOTE: potentially need to disable input while activating current?
-    this.user_sequence.push(square.id);
+    toggleGameSquares(this.userInput, false);
+    activateGameSquare(square, this.delay_time * 0.5); // NOTE: potentially need to disable input while activating current?
     setTimeout(() => {
+      toggleGameSquares(this.userInput, true);
+      this.user_sequence.push(square.id);
       this.checkSequence();
     }, this.delay_time);
   };
@@ -162,7 +163,9 @@ class GameMaster {
    * length, and triggers the next round
    */
   isWin = () => {
-    alert('Correct Sequence!');
+    const sound = new Audio('./audio/success.wav');
+    sound.currentTime = 0;
+    sound.play();
     this.curr_score += 1;
     setDisplayScore(this.curr_score);
     this.incrementSeqLength();
@@ -174,10 +177,14 @@ class GameMaster {
    * the high score, and changes the play button to say 'Play Again' and reactivates it
    */
   gameOver = () => {
+    const sound = new Audio('./audio/buzzer.wav');
+    sound.currentTime = 0;
+    sound.play();
     document.getElementById('play-button').innerText = 'Play Again';
     toggleGameSquares(this.userInput, false);
-    setHighScore(this.curr_score);
-    alert('Game Over!');
+    setTimeout(() => {
+      setHighScore(this.curr_score);
+    }, 1500);
     // TODO: maybe display correct sequence?
     togglePlayButton(true);
   };
@@ -189,7 +196,6 @@ class GameMaster {
   nextRound = () => {
     this.user_sequence = [];
     this.generateSequence();
-    alert('Get ready!');
     setTimeout(() => {
       this.runAITurn();
     }, 1000);

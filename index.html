@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./styles.css" />
     <title>Sam Says</title>
     <script defer src="./main.js" type="module"></script>
-    <!-- TODO: set favicon -->
+    <link rel="shortcut icon" href="favicon.ico" />
   </head>
   <body>
     <h1>Sam Says</h1>
@@ -19,17 +19,20 @@
       <div class="square" id="c">(C)ode</div>
       <div class="square" id="k">(K)evin</div>
     </div>
-    <div class="scores">
-      <div class="curr-score">
+    <div id="scores">
+      <h3 id="curr-score">
         Current Score:
         <span id="curr-score-num">0</span>
-      </div>
-      <div class="high-score">
+      </h3>
+      <h3 id="high-score">
         High Score:
         <span id="high-score-num">0</span>
-      </div>
+      </h3>
     </div>
-    <!-- TODO: Add GitHub link/logo -->
-    <footer>Made by Sam, Brock, and Ivy</footer>
+    <footer>
+      Made by Sam, Brock, and Ivy
+      <br />
+      <a href="https://github.com/iylim/simon-says">Fork us on GitHub</a>
+    </footer>
   </body>
 </html>

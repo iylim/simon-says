@@ -4,6 +4,7 @@
 
 body {
   text-align: center;
+  background-color: #f0f0f0;
 }
 
 #play-button {
@@ -24,40 +25,50 @@ body {
   margin-bottom: 1rem;
 }
 
-.score {
+/* #scores {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 40%;
   margin: auto;
+} */
+
+#high-score {
+  transition: all 200ms ease-in-out;
 }
 
 .square {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 75px;
+  padding: 2rem;
+  font-size: 20px;
   border: dotted;
   border-color: blue;
-  width: 4rem;
-  padding: 4rem;
   background-color: rgba(173, 216, 230, 0.5);
   transition: all 150ms ease-in-out;
 }
 
 .square#r {
   --opacity: 0.6;
-  background-color: rgba(255, 0, 0, var(--opacity));
+  background-color: rgba(0, 128, 0, var(--opacity));
 }
 
 .square#y {
   --opacity: 0.6;
-  background-color: rgba(0, 0, 255, var(--opacity));
+  background-color: rgba(255, 0, 0, var(--opacity));
 }
 
 .square#c {
   --opacity: 0.6;
-  background-color: rgba(0, 128, 0, var(--opacity));
+  background-color: rgba(255, 210, 0, var(--opacity));
 }
 
 .square#k {
   --opacity: 0.6;
-  background-color: rgb(255, 210, 0, var(--opacity));
+  background-color: rgba(0, 0, 255, var(--opacity));
 }
 
 footer {
@@ -65,5 +76,7 @@ footer {
   bottom: 0;
   width: 99%;
   margin: auto;
+  margin-top: 1.4rem;
   padding-bottom: 0.5rem;
+  line-height: 1.3;
 }

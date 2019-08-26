@@ -30,25 +30,41 @@ export const togglePlayButton = (enabled = false) => {
 };
 
 /**
+ * Sets inline CSS styles of an element then removes them after a delay time, creating a
+ * simple animation effect.
+ * @param {HTMLElement} element the actual element to animate
+ * @param {Object} properties the dictionary of css properties to be set
+ * @param {number} display_time the amount of time in ms for the effects to remain
+ */
+export const animateElement = (element, properties, display_time) => {
+  Object.keys(properties).forEach(prop => {
+    element.style.setProperty(prop, properties[prop]);
+  });
+  setTimeout(() => {
+    Object.keys(properties).forEach(prop => {
+      element.style.setProperty(prop, '');
+    });
+  }, display_time);
+};
+
+/**
  * Activates all of the visual and audible elements to indicate a square has been selected
  * @param {HTMLElement} square the actual square element to modify
  * @param {number} display_time the amount of time in ms for the effects to remain, defaults to 500
  */
 export const activateGameSquare = (square, display_time = 500) => {
-  // TODO: figure out a way to get the correct sound in
+  const sound = new Audio(`./audio/${square.id}.wav`);
+  sound.currentTime = 0.2;
+  sound.play();
   const properties = {
     '--opacity': 1,
     border: '3px solid darkslategrey',
+    'font-size': '28px',
   };
-  Object.keys(properties).forEach(prop => {
-    square.style.setProperty(prop, properties[prop]);
-  });
+  animateElement(square, properties, display_time);
   setTimeout(() => {
-    Object.keys(properties).forEach(prop => {
-      square.style.setProperty(prop, '');
-    });
+    sound.pause();
   }, display_time);
-  // console.log('Activating square:', square.id);
 };
 
 /**
@@ -71,8 +87,14 @@ export const setHighScore = new_score => {
   if (new_score > high_score) {
     localStorage.setItem('high_score', new_score);
     document.getElementById('high-score-num').innerText = new_score;
-    // eslint-disable-next-line no-alert
-    alert(`New high score: ${new_score}\nOld high score: ${high_score}`);
+    const high_score_text = document.getElementById('high-score');
+    const properties = {
+      'font-size': '30px',
+      margin: '0px',
+      color: 'red',
+      'font-weight': 'bolder',
+    };
+    animateElement(high_score_text, properties, 1000);
   }
 };
 
