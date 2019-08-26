@@ -60,6 +60,7 @@ class GameMaster {
     this.curr_score = 0;
     setDisplayScore(0);
     this.seq_length = this.start_length;
+    this.running_turn = false;
     this.user_turn = false;
     this.user_sequence = [];
     this.sequence = this.generateSequence();
@@ -87,6 +88,9 @@ class GameMaster {
    * then reenables user input.
    */
   runAITurn = () => {
+    if (this.running_turn) return;
+    // since there's the timeout async stuff this is minor 'thread' protection
+    this.running_turn = true;
     this.user_turn = false;
     toggleGameSquares(this.userInput, false);
     this.delay_time = 650;
@@ -99,7 +103,8 @@ class GameMaster {
     setTimeout(() => {
       toggleGameSquares(this.userInput, true);
       this.user_turn = true;
-    }, this.delay_time * this.sequence.length);
+      this.running_turn = false;
+    }, (this.delay_time + this.space_time) * this.sequence.length);
   };
 
   /**
@@ -116,17 +121,20 @@ class GameMaster {
    * @param {Event} event the triggering input event
    */
   userInput = event => {
+    if (this.running_turn) return;
     if (!this.user_turn) return;
     if (event.type === 'keydown') {
       if (!Object.keys(this.board).includes(event.key)) return;
     }
     const square = event.type === 'keydown' ? this.board[event.key] : event.target;
     toggleGameSquares(this.userInput, false);
-    activateGameSquare(square, this.delay_time * 0.5); // NOTE: potentially need to disable input while activating current?
+    activateGameSquare(square, this.delay_time * 0.5);
     setTimeout(() => {
-      toggleGameSquares(this.userInput, true);
       this.user_sequence.push(square.id);
-      this.checkSequence();
+      const keep_running = this.checkSequenceToContinue();
+      if (keep_running) {
+        toggleGameSquares(this.userInput, true);
+      }
     }, this.delay_time);
   };
 
@@ -136,9 +144,12 @@ class GameMaster {
    * - Does nothing if user sequence is correct so far but not the entire sequence
    * - Triggers a game over if there is an incorrect input
    * - Triggers a win if the input is entirely correct and covers the whole sequence
+   *
+   * @returns {boolean} `true` if game should keep running, `false` if win or game over
    */
-  checkSequence = () => {
-    /* NOTE: this is kinda inefficient because it checks the whole sequence every time
+  checkSequenceToContinue = () => {
+    /* 
+      NOTE: this is kinda inefficient because it checks the whole sequence every time
       Could probably be improved by JUST checking the last/most recent element and assuming this runs every step
       Current way is a little 'safer' though in case it doesn't get run
     */
@@ -148,14 +159,16 @@ class GameMaster {
       if (this.user_sequence[index] !== this.sequence[index]) {
         // if even one element is wrong, it's game over
         this.gameOver();
-        return;
+        return false;
       }
     }
     // if we have gotten to this point, everything in the user sequence is correct so far
     // so now it's just time to check if they have the full sequence
     if (this.user_sequence.length === this.sequence.length) {
       this.isWin();
+      return false;
     }
+    return true;
   };
 
   /**
